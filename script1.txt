@@ -1,0 +1,53 @@
+package stepdef;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class logindef {
+
+	static WebDriver driver = new ChromeDriver();
+
+	@Given("User is on login")
+	public void user_is_on_login() {
+		// Write code here that turns the phrase above into concrete actions
+		driver.get("https://uat.digin.co.in/login");
+//	driver.get("");
+	}
+
+	@When("user enters valid username and password")
+	public void user_enters_valid_username_and_password() {
+		// Write code here that turns the phrase above into concrete actions
+		driver.findElement(By.xpath("//*[@id=\"__next\"]/div[1]/div/div[2]/div/div[2]/form/div[1]/div/input"))
+				.sendKeys("mangesh.darji+july7@aurigait.com");
+		driver.findElement(By.xpath("//*[@name=\"password\"]")).sendKeys("Mangesh@123");
+	}
+
+	@And("Clicks on login button")
+	public void clicks_on_login_button() {
+		driver.findElement(By.xpath("//*[@id=\"__next\"]/div[1]/div/div[2]/div/div[2]/form/button")).click();
+
+	}
+
+	@Then("user is navigated to Home page")
+	public void user_is_navigated_to_Home_page() throws InterruptedException {
+String expectedurl=		"https://uat.digin.co.in/dashboard";
+Thread.sleep(4000);
+String actualurl = driver.getCurrentUrl();
+System.out.println(expectedurl);
+System.out.println(actualurl);
+Assert.assertEquals(expectedurl, actualurl);
+	}
+
+	@Then("Close the browser")
+	public void close_the_browser() {
+		// Write code here that turns the phrase above into concrete actions
+driver.close();
+	}
+}
